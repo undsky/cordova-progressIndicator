@@ -2,8 +2,11 @@
 
 ### 阻止 Android 中点击遮罩层指示器自动隐藏
 
-
 > add progressIndicator.setCancelable(false); in the ProgressIndicator.java file. 
+
+### 扩展 Android 
+
+> 集成 https://github.com/Kaopiz/KProgressHUD
 
 
 This plugin allows you to show a native Progress Indicator on iOS - by [Paolo Bernasconi](https://github.com/pbernasconi)
