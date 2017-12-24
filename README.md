@@ -1,4 +1,11 @@
 # Cordova Progress-Indicator Plugin
+
+### 阻止 Android 中点击遮罩层指示器自动隐藏
+
+
+> add progressIndicator.setCancelable(false); in the ProgressIndicator.java file. 
+
+
 This plugin allows you to show a native Progress Indicator on iOS - by [Paolo Bernasconi](https://github.com/pbernasconi)
 
 There are several types of indicators available:
