@@ -35,6 +35,7 @@
 
     <!-- Android -->
     <platform name="android">
+        <framework src="com.kaopiz:kprogresshud:1.1.0" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="ProgressIndicator">
                 <param name="android-package" value="org.apache.cordova.progressindicator.ProgressIndicator"/>
