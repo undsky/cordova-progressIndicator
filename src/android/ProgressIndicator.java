@@ -58,11 +58,20 @@ public class ProgressIndicator extends CordovaPlugin {
         } else if (action.equals("showDeterminate")) {
             Integer timeout = args.getInt(1);
             String title = args.getString(2);
-            hud = KProgressHUD.create(cordova.getActivity()).setStyle(KProgressHUD.Style.PIE_DETERMINATE)
-                    .setLabel(title);
-            hud.show();
-            simulateProgressUpdate(timeout);
-            callbackContext.success();
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    hud = KProgressHUD.create(cordova.getActivity()).setStyle(KProgressHUD.Style.PIE_DETERMINATE)
+                            .setLabel(title);
+                    hud.show();
+                    simulateProgressUpdate(timeout);
+                    callbackContext.success();
+                }
+            });
+            // hud = KProgressHUD.create(cordova.getActivity()).setStyle(KProgressHUD.Style.PIE_DETERMINATE)
+            //         .setLabel(title);
+            // hud.show();
+            // simulateProgressUpdate(timeout);
+            // callbackContext.success();
             return true;
         } else if (action.equals("showDeterminateWithLabel")) {
 
