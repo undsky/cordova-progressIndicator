@@ -146,12 +146,12 @@ public class ProgressIndicator extends CordovaPlugin {
 
             @Override
             public void run() {
-                currentProgress += 1;
+                currentProgress += 1000;
                 hud.setProgress(currentProgress);
                 if (currentProgress < timeout) {
-                    handler.postDelayed(this, 50);
+                    handler.postDelayed(this, 1000);
                 }
             }
-        }, 100);
+        }, 1000);
     }
 }
