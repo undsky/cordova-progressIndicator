@@ -1,6 +1,6 @@
 # Cordova Progress-Indicator Plugin
 
-### 阻止 Android 中点击遮罩层指示器自动隐藏
+### ~~阻止 Android 中点击遮罩层指示器自动隐藏~~
 
 > add progressIndicator.setCancelable(false); in the ProgressIndicator.java file. 
 
