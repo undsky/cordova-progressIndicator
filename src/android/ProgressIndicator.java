@@ -4,85 +4,118 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-import android.app.ProgressDialog;
-
-import android.content.DialogInterface;
-import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 public class ProgressIndicator extends CordovaPlugin {
 
-    private ProgressDialog progressIndicator = null;
-    private static final String LOG_TAG = "ProgressIndicator";
     private KProgressHUD hud;
+    final Handler handler = new Handler();
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("show")) {
-            show();
+            boolean dim = args.getBoolean(0);
+            initHud(dim, KProgressHUD.Style.SPIN_INDETERMINATE);
+            hud.show();
             callbackContext.success();
             return true;
         } else if (action.equals("showSimple")) {
-            show();
+            boolean dim = args.getBoolean(0);
+            initHud(dim, KProgressHUD.Style.SPIN_INDETERMINATE);
+            hud.show();
             callbackContext.success();
             return true;
         } else if (action.equals("showSimpleWithLabel")) {
+            boolean dim = args.getBoolean(0);
             String title = args.getString(1);
-            show(title);
+            initHud(dim, KProgressHUD.Style.SPIN_INDETERMINATE);
+            hud.setLabel(title);
+            hud.show();
             callbackContext.success();
             return true;
         } else if (action.equals("showSimpleWithLabelDetail")) {
+            boolean dim = args.getBoolean(0);
             String title = args.getString(1);
-            String text = args.getString(2);
-            show(title, text, true);
+            String detail = args.getString(2);
+            initHud(dim, KProgressHUD.Style.SPIN_INDETERMINATE);
+            hud.setLabel(title).setDetailsLabel(detail);
+            hud.show();
+            return true;
+        } else if (action.equals("showDeterminate")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            initHud(dim, KProgressHUD.Style.PIE_DETERMINATE);
+            hud.setMaxProgress(timeout);
+            hud.show();
+            simulateProgressUpdate(timeout);
             callbackContext.success();
             return true;
-        } else if (action.equals("showText")) {
-            String title = args.getString(1);
-            String text = args.getString(2);
-            show(title, text, false);
+        } else if (action.equals("showDeterminateWithLabel")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            String title = args.getString(2);
+            initHud(dim, KProgressHUD.Style.PIE_DETERMINATE);
+            hud.setMaxProgress(timeout).setLabel(title);
+            hud.show();
+            simulateProgressUpdate(timeout);
+            callbackContext.success();
+            return true;
+        } else if (action.equals("showDeterminateAnnular")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            initHud(dim, KProgressHUD.Style.ANNULAR_DETERMINATE);
+            hud.setMaxProgress(timeout);
+            hud.show();
+            simulateProgressUpdate(timeout);
+            callbackContext.success();
+            return true;
+        } else if (action.equals("showDeterminateAnnularWithLabel")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            String title = args.getString(2);
+            initHud(dim, KProgressHUD.Style.ANNULAR_DETERMINATE);
+            hud.setMaxProgress(timeout).setLabel(title);
+            hud.show();
+            simulateProgressUpdate(timeout);
+            callbackContext.success();
+            return true;
+        } else if (action.equals("showDeterminateBar")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            initHud(dim, KProgressHUD.Style.BAR_DETERMINATE);
+            hud.setMaxProgress(timeout);
+            hud.show();
+            simulateProgressUpdate(timeout);
+            callbackContext.success();
+            return true;
+        } else if (action.equals("showDeterminateBarWithLabel")) {
+            boolean dim = args.getBoolean(0);
+            int timeout = args.getInt(1);
+            String title = args.getString(2);
+            initHud(dim, KProgressHUD.Style.BAR_DETERMINATE);
+            hud.setMaxProgress(timeout).setLabel(title);
+            hud.show();
+            simulateProgressUpdate(timeout);
             callbackContext.success();
             return true;
         } else if (action.equals("hide")) {
             hide();
             callbackContext.success();
             return true;
-        } else if (action.equals("showDeterminate")) {
-            Integer timeout = args.getInt(1);
-            String title = args.getString(2);
-            cordova.getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    hud = KProgressHUD.create(cordova.getActivity()).setStyle(KProgressHUD.Style.PIE_DETERMINATE)
-                            .setLabel(title);
-                    hud.show();
-                    simulateProgressUpdate(timeout);
-                    callbackContext.success();
-                }
-            });
-            // hud = KProgressHUD.create(cordova.getActivity()).setStyle(KProgressHUD.Style.PIE_DETERMINATE)
-            //         .setLabel(title);
-            // hud.show();
-            // simulateProgressUpdate(timeout);
-            // callbackContext.success();
-            return true;
-        } else if (action.equals("showDeterminateWithLabel")) {
-
-        } else if (action.equals("showAnnular")) {
-
-        } else if (action.equals("showAnnularWithLabel")) {
-
-        } else if (action.equals("showBar")) {
-
-        } else if (action.equals("showBarWithLabel")) {
-
+            // } else if (action.equals("showText")) {
+            //     boolean dim = args.getBoolean(0);
+            //     String title = args.getString(1);
+            //     // setCustomView
+            //     callbackContext.success();
+            //     return true;
+            // }else if (action.equals("showSuccess")) {
+            //     boolean dim = args.getBoolean(0);
+            //     String title = args.getString(1);
+            //     // setCustomView
+            //     callbackContext.success();
+            //     return true;
         } else {
             callbackContext.error(
                     "Not supported call. On Android we only support show, showSimple, showSimpleWithLabel and showSimpleWithLabelDetail");
@@ -91,53 +124,23 @@ public class ProgressIndicator extends CordovaPlugin {
         return false;
     }
 
-    /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
-     */
-    public void show() {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-        progressIndicator.show();
-    }
-
-    /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
-     */
-    public void show(String text) {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-        progressIndicator.setTitle(text);
-        progressIndicator.show();
-    }
-
-    /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
-     */
-    public void show(String title, String detail, Boolean withTitle) {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-        if (withTitle)
-            progressIndicator.setTitle(title);
-        progressIndicator.setMessage(detail);
-        progressIndicator.show();
-    }
-
-    /**
-     * This hide the ProgressDialog
-     */
     public void hide() {
-        if (progressIndicator != null) {
-            progressIndicator.dismiss();
-            progressIndicator = null;
+        if (hud != null) {
+            handler.removeCallbacksAndMessages(null);
+            hud.dismiss();
+            hud = null;
         }
     }
 
-    private void simulateProgressUpdate(Integer timeout) {
-        hud.setMaxProgress(timeout);
-        final Handler handler = new Handler();
+    private void initHud(boolean dim, KProgressHUD.Style style) {
+        hide();
+        hud = KProgressHUD.create(cordova.getActivity()).setStyle(style).setCancellable(false);
+        if (dim)
+            hud.setDimAmount(0.5f);
+    }
+
+    private void simulateProgressUpdate(final int timeout) {
+        handler.removeCallbacksAndMessages(null);
         handler.postDelayed(new Runnable() {
             int currentProgress;
 
@@ -145,23 +148,10 @@ public class ProgressIndicator extends CordovaPlugin {
             public void run() {
                 currentProgress += 1;
                 hud.setProgress(currentProgress);
-                // if (currentProgress == 80) {
-                //     hud.setLabel("Almost finish...");
-                // }
                 if (currentProgress < timeout) {
                     handler.postDelayed(this, 50);
                 }
             }
         }, 100);
-    }
-
-    private void scheduleDismiss() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hud.dismiss();
-            }
-        }, 2000);
     }
 }
