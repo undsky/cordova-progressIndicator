@@ -9,7 +9,15 @@
 > 集成 https://github.com/Kaopiz/KProgressHUD
 
 
-This plugin allows you to show a native Progress Indicator on iOS - by [Paolo Bernasconi](https://github.com/pbernasconi)
+This plugin allows you to show a native Progress Indicator on iOS and Android
+
+# Install
+
+```bash
+cordova plugin add https://github.com/undsky/cordova-progressIndicator.git
+# or
+ionic cordova plugin add https://github.com/undsky/cordova-progressIndicator.git
+```
 
 There are several types of indicators available:
 
@@ -20,22 +28,12 @@ There are several types of indicators available:
 * [Success](http://pbernasconi.github.io/cordova-progressIndicator/#others)
 * [Simple Text](http://pbernasconi.github.io/cordova-progressIndicator/#others)
 
-# Install
-
-```bash
-cordova plugin add cordova-plugin-progressindicator
-# or
-ionic cordova plugin add cordova-plugin-progressindicator
-```
-
 # [View the Docs](http://pbernasconi.github.io/cordova-progressIndicator/)
 
 The Docs are situated at [http://pbernasconi.github.io/cordova-progressIndicator/](http://pbernasconi.github.io/cordova-progressIndicator/)
 
 
 ## Screenshots
-
-iOS
 
 ![ScreenShot](demo/screenshots/simple-large-img.jpg )
 
@@ -52,10 +50,11 @@ iOS
 
 ### CREDITS
 
- - [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
- - [Cordova-ActivityIndicator](https://github.com/Initsogar/cordova-activityindicator)
- - 
+ - [cordova-progressIndicator](https://github.com/pbernasconi/cordova-progressIndicator/)
+ 
  
 #### License
 
 Apache license 2.0 - Use this plugin for any production / development needs, and if you'd like to make an attribution to me somewhere.
+
+## [查看更多项目](https://www.undsky.com)
